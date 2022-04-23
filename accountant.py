@@ -16,8 +16,19 @@ class Manager:
             self.actions[name] = cb
         return decorate
 
+    def execute(self, name):
+        if name not in self.actions:
+            print("Action not defined")
+        else:
+            self.actions[name](self)
+
+
+manager = Manager()
+# print(manager.execute("dotychczasowa_historia_operacji"))
+
 
 # wczytywanie danych z zewnętrznego pliku z historią operacji i zapisanie ich do historii operacji wewnątrz programu
+@ manager.assign("dotychczasowa_historia_operacji")
 def dotychczasowa_historia_operacji():
     with open(file_path, 'r') as f:
         while True:
@@ -94,6 +105,8 @@ def zapis_do_pliku():
 
 
 # wykonywane tylko przy odpaleniu tego pliku, czyli accountant.py
-if __name__ == "__main__":
-    dotychczasowa_historia_operacji()
-    print(historia_operacji)
+# if __name__ == "__main__":
+#     dotychczasowa_historia_operacji()
+#     print(historia_operacji)
+
+print(manager.execute("dotychczasowa_historia_operacji"))
