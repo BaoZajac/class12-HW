@@ -3,9 +3,11 @@ from accountant import historia_na_dzialania
 from accountant import manager
 
 
-manager.execute("dotychczasowa_historia_operacji")
-# dotychczasowa_historia_operacji()
+@manager.assign("konto")
+def konto_func(abc):
+    dotychczasowa_historia_operacji()
+    saldo = historia_na_dzialania()[0]
+    print(saldo)
 
-saldo = historia_na_dzialania()[0]
 
-print(saldo)
+manager.execute("konto")

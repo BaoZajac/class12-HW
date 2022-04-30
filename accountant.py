@@ -23,12 +23,7 @@ class Manager:
             self.actions[name](self)
 
 
-manager = Manager()
-# print(manager.execute("dotychczasowa_historia_operacji"))
-
-
 # wczytywanie danych z zewnętrznego pliku z historią operacji i zapisanie ich do historii operacji wewnątrz programu
-@ manager.assign("dotychczasowa_historia_operacji")
 def dotychczasowa_historia_operacji():
     with open(file_path, 'r') as f:
         while True:
@@ -82,8 +77,9 @@ def historia_na_dzialania():
         elif polecenie[0] == "sprzedaz":
             kwota = int(polecenie[2]) * int(polecenie[3])
             saldo += kwota
-            if not magazyn.get(sys.argv[2]):
-                magazyn[sys.argv[2]] = 0
+            if len(sys.argv) > 2:
+                if not magazyn.get(sys.argv[2]):
+                    magazyn[sys.argv[2]] = 0
             liczba_sztuk_w_magazynie = int(magazyn[polecenie[1]])
             if liczba_sztuk_w_magazynie < int(polecenie[3]) or int(polecenie[2]) < 0 or int(polecenie[3]) < 0:
                 # saldo -= kwota
@@ -104,9 +100,10 @@ def zapis_do_pliku():
                 f.write(element2 + "\n")
 
 
-# wykonywane tylko przy odpaleniu tego pliku, czyli accountant.py
-# if __name__ == "__main__":
-#     dotychczasowa_historia_operacji()
-#     print(historia_operacji)
+manager = Manager()
 
-print(manager.execute("dotychczasowa_historia_operacji"))
+# wykonywane tylko przy odpaleniu tego pliku, czyli accountant.py
+if __name__ == "__main__":
+    dotychczasowa_historia_operacji()
+    print(historia_operacji)
+
